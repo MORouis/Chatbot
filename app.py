@@ -99,9 +99,9 @@ def main():
                     vectorstore = get_vectorstore(text_chunks)
                     # create conversation chain
                     st.session_state.conversation = get_conversation_chain(vectorstore)
-                    # files costs
-                    tokens = tokenize_raw_text(raw_text)
-                    payments = len(tokens) * 0.02 / 10**6
+                    # Billing when using the OpenAI API key
+                    #tokens = tokenize_raw_text(raw_text)
+                    #payments = len(tokens) * 0.02 / 10**6
                     #st.write(payments, "$")
 
 
