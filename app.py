@@ -47,8 +47,7 @@ def get_conversation_chain(vectorstore):
 
 def handle_user_input(user_question):
     if st.session_state.conversation is not None:
-        prompt = generate_prompt(user_question)
-        response = st.session_state.conversation({'question': prompt})
+        response = st.session_state.conversation({'question': user_question})
         st.session_state.chat_history = response['chat_history']
 
         for i, message in enumerate(st.session_state.chat_history):
@@ -59,14 +58,6 @@ def handle_user_input(user_question):
 
     else:
         st.write("Conversation is not initialized. Please initialize and retry.")
-
-def generate_prompt(question):
-    """Generates a prompt for the LLM."""
-    prompt = f"""
-    You are a knowledgeable assistant. Answer the question as accurately as possible.
-    Question: {question}
-    """
-    return prompt
 
 def tokenize_raw_text(raw_text):
     # Load the tokenizer for a specific model (e.g., GPT-3.5-turbo)
@@ -92,13 +83,6 @@ def main():
     user_question = st.text_input("Ask a question about your documents:")
     if user_question:
         handle_user_input(user_question)
-    
-    feedback = st.text_input("Provide your feedback on the response:")
-    if st.button("Submit Feedback"):
-        # Store the feedback for future training
-        with open("feedback.txt", "a") as f:
-            f.write(f"Question: {user_question}\nFeedback: {feedback}\n\n")
-        st.success("Thank you for your feedback!")
 
 
     with st.sidebar:
